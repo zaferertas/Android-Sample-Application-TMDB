@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">TMDB example app</string>
+    <string name="fetch_error_message">Error fetching items!</string>
+    <string name="fetch_details_error_message">Error loading details!</string>
+</resources>
