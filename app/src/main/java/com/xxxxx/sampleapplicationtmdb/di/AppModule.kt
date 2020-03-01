@@ -39,8 +39,8 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideRepository(api:Api, compositeDisposable: CompositeDisposable): Repository {
-        return Repository(api, compositeDisposable)
+    fun provideRepository(api: Api): Repository {
+        return Repository(api)
     }
 }
 
@@ -49,9 +49,12 @@ class ViewModelModule {
 
     @Provides
     @Singleton
-    fun provideMainViewModelFactory(repository: Repository): MainViewModelFactory {
+    fun provideMainViewModelFactory(
+        repository: Repository,
+        compositeDisposable: CompositeDisposable
+    ): MainViewModelFactory {
         return MainViewModelFactory(
-            repository
+            repository, compositeDisposable
         )
     }
 }

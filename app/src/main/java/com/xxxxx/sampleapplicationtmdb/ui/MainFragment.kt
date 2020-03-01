@@ -37,6 +37,7 @@ class MainFragment : Fragment() {
 
         activity?.let { //to share the same view model between fragments
             viewModel = ViewModelProvider(it, mainViewModelFactory).get(MainViewModel::class.java)
+            //viewModel.loadPopularMovies()
             it.title = getString(R.string.app_name)
         }
 
@@ -51,7 +52,7 @@ class MainFragment : Fragment() {
         binding.viewmodel = viewModel
         binding.mainRecyclerView.adapter = adapter
 
-        viewModel.items.observe(viewLifecycleOwner, Observer { items ->
+        viewModel.movieItems.observe(viewLifecycleOwner, Observer { items ->
             adapter.setItems(items)
         })
 

@@ -59,12 +59,12 @@ dependencies {
     implementation "io.reactivex.rxjava3:rxjava:3.0.0"
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
 
-    implementation 'com.google.dagger:dagger-android:2.15'
+    implementation 'com.google.dagger:dagger-android:2.23.1'
     kapt 'com.google.dagger:dagger-compiler:2.21'
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0'
-    testImplementation 'org.mockito:mockito-core:2.25.0'
+    testImplementation 'org.mockito:mockito-inline:2.25.0'
     testImplementation 'androidx.arch.core:core-testing:2.1.0'
 
 
