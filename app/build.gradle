@@ -2,22 +2,35 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-allopen'
 
+//to connect TMDB API
 def apikeyPropertiesFile = rootProject.file("apikey.properties")
 def apikeyProperties = new Properties()
 apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
 
+allOpen {
+    // allows mocking for classes w/o directly opening them for release builds
+    annotation 'com.xxxxx.sampleapplicationtmdb.OpenClass'
+}
+
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId "com.xxxxx.sampleapplicationtmdb"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.xxxxx.sampleapplicationtmdb.testutils.SampleAppTestRunner"
+        testInstrumentationRunnerArguments clearPackageData: 'true'
+
         buildConfigField("String", "API_KEY", apikeyProperties['API_KEY'])
+
+        testOptions {
+            execution 'ANDROIDX_TEST_ORCHESTRATOR'
+        }
     }
     buildTypes {
         release {
@@ -26,7 +39,7 @@ android {
         }
     }
 
-    dataBinding {
+    viewBinding {
         enabled = true
     }
 
@@ -34,6 +47,9 @@ android {
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8
             targetCompatibility JavaVersion.VERSION_1_8
+        }
+        kotlinOptions {
+            jvmTarget = JavaVersion.VERSION_1_8.toString()
         }
     }
 }
@@ -60,7 +76,7 @@ dependencies {
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
 
     implementation 'com.google.dagger:dagger-android:2.23.1'
-    kapt 'com.google.dagger:dagger-compiler:2.21'
+    kapt 'com.google.dagger:dagger-compiler:2.24'
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0'
@@ -68,7 +84,20 @@ dependencies {
     testImplementation 'androidx.arch.core:core-testing:2.1.0'
 
 
+
+    androidTestImplementation 'androidx.test:core:1.2.0'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestUtil 'androidx.test:orchestrator:1.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
+    androidTestImplementation 'androidx.arch.core:core-testing:2.1.0'
+    androidTestImplementation "io.mockk:mockk-android:1.9.3"
+
+    androidTestImplementation 'com.google.dagger:dagger-android:2.23.1'
+    kaptAndroidTest 'com.google.dagger:dagger-compiler:2.24'
+
+    debugImplementation 'androidx.fragment:fragment-testing:1.2.4'
 
 }

@@ -8,6 +8,7 @@ import com.nhaarman.mockitokotlin2.verify
 import com.xxxxx.sampleapplicationtmdb.data.MovieItem
 import com.xxxxx.sampleapplicationtmdb.data.MoviePageResult
 import com.xxxxx.sampleapplicationtmdb.data.Repository
+import com.xxxxx.sampleapplicationtmdb.ui.movielist.MovieListViewModel
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.observers.DisposableSingleObserver
 import org.junit.*
@@ -15,38 +16,40 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
-class MainViewModelTest {
+class MovieListViewModelTest {
 
     @get:Rule
     val taskExecutorRule = InstantTaskExecutorRule()
 
     private val repository: Repository = mock()
-    private val compositeDisposable: CompositeDisposable = mock()
 
     private val observerIsLoading = mock<Observer<Boolean>>()
     private val observerMovieItems = mock<Observer<List<MovieItem>>>()
     private val observerErrorLoadingList = mock<Observer<Boolean>>()
 
-    private val mockedMoviePageResult = mock<MoviePageResult>()
-
-    private lateinit var mainViewModel: MainViewModel
+    private lateinit var movieListViewModel: MovieListViewModel
+    private val compositeDisposable: CompositeDisposable = mock()
 
     @Before
     fun setUp() {
-        mainViewModel = MainViewModel(repository, compositeDisposable)
+        movieListViewModel =
+            MovieListViewModel(
+                repository,
+                compositeDisposable
+            )
     }
 
     @Test
     fun `isLoading shows correct state before and after getPopularMovies executes with success`() {
 
-        mainViewModel.isLoading.observeForever(observerIsLoading)
+        movieListViewModel.isLoading.observeForever(observerIsLoading)
 
-        Assert.assertEquals(true, mainViewModel.isLoading.value)
+        Assert.assertEquals(true, movieListViewModel.isLoading.value)
 
         argumentCaptor<DisposableSingleObserver<MoviePageResult>>().apply {
             verify(repository).getPopularMovies(capture())
-            firstValue.onSuccess(mockedMoviePageResult)
-            Assert.assertEquals(false, mainViewModel.isLoading.value)
+            firstValue.onSuccess(getDummyMoviePageResultObject())
+            Assert.assertEquals(false, movieListViewModel.isLoading.value)
         }
     }
 
@@ -54,45 +57,47 @@ class MainViewModelTest {
     @Test
     fun `movieItems gets populated when loadPopularMovies executes successfully`() {
 
-        val mockedMoviePage = MoviePageResult(
-            page = 1,
-            totalResults = 1,
-            totalPages = 1,
-            movieResult = arrayListOf(
-                MovieItem(0, ", 1.0, ", 1.0F, "", "")
-            )
-        )
-
-        mainViewModel.movieItems.observeForever(observerMovieItems)
-
-        Assert.assertEquals(true, mainViewModel.isLoading.value)
+        movieListViewModel.movieItems.observeForever(observerMovieItems)
 
         argumentCaptor<DisposableSingleObserver<MoviePageResult>>().apply {
             verify(repository).getPopularMovies(capture())
-            firstValue.onSuccess(mockedMoviePage)
-            Assert.assertEquals(1, mainViewModel.movieItems.value?.size)
+            firstValue.onSuccess(getDummyMoviePageResultObject())
+            Assert.assertEquals(3, movieListViewModel.movieItems.value?.size)
         }
     }
 
     @Test
-    fun `errorLoadingList gets populated when loadPopularMovies executes with error`() {
+    fun `errorLoadingList shows true when loadPopularMovies executes with error`() {
 
-        mainViewModel.errorLoadingList.observeForever(observerErrorLoadingList)
+        movieListViewModel.errorLoadingList.observeForever(observerErrorLoadingList)
 
         argumentCaptor<DisposableSingleObserver<MoviePageResult>>().apply {
             verify(repository).getPopularMovies(capture())
             firstValue.onError(Exception())
-            Assert.assertEquals(true, mainViewModel.errorLoadingList.value)
+            Assert.assertEquals(true, movieListViewModel.errorLoadingList.value)
         }
     }
 
     @After
     fun tearDown() {
-        mainViewModel.movieItems.removeObserver(observerMovieItems)
-        mainViewModel.isLoading.removeObserver(observerIsLoading)
-        mainViewModel.errorLoadingList.removeObserver(observerErrorLoadingList)
+        movieListViewModel.movieItems.removeObserver(observerMovieItems)
+        movieListViewModel.isLoading.removeObserver(observerIsLoading)
+        movieListViewModel.errorLoadingList.removeObserver(observerErrorLoadingList)
     }
 
+    private fun getDummyMoviePageResultObject(): MoviePageResult {
+
+        return MoviePageResult(
+            page = 1,
+            totalResults = 3,
+            totalPages = 1,
+            movieResult = arrayListOf(
+                MovieItem(0, "", 1.0F, "", ""),
+                MovieItem(1, "", 1.0F, "", ""),
+                MovieItem(2, "", 1.0F, "", "")
+            )
+        )
+    }
 }
 
 
