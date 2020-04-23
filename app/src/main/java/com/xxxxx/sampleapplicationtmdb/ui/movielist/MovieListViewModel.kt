@@ -3,14 +3,12 @@ package com.xxxxx.sampleapplicationtmdb.ui.movielist
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.xxxxx.sampleapplicationtmdb.OpenForTesting
 import com.xxxxx.sampleapplicationtmdb.data.MovieItem
 import com.xxxxx.sampleapplicationtmdb.data.MoviePageResult
 import com.xxxxx.sampleapplicationtmdb.data.Repository
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.observers.DisposableSingleObserver
 
-@OpenForTesting
 class MovieListViewModel(
     private val repository: Repository,
     private val compositeDisposable: CompositeDisposable

@@ -1,21 +1,18 @@
-package com.xxxxx.sampleapplicationtmdb.ui
+package com.xxxxx.sampleapplicationtmdb.ui.movielist
 
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.lifecycle.MutableLiveData
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.xxxxx.sampleapplicationtmdb.R
 import com.xxxxx.sampleapplicationtmdb.data.MovieItem
-import com.xxxxx.sampleapplicationtmdb.ui.movielist.MovieListAdapter
-import com.xxxxx.sampleapplicationtmdb.ui.movielist.MovieListFragment
-import com.xxxxx.sampleapplicationtmdb.ui.movielist.MovieListViewModel
+import com.xxxxx.sampleapplicationtmdb.ui.MainFragmentFactory
+import com.xxxxx.sampleapplicationtmdb.ui.MainViewModelFactory
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Before
@@ -52,13 +49,15 @@ class MovieListFragmentTest {
     fun testLoadingProgressBarVisible() {
         loadingLiveData.postValue(true)
         launchFragment()
+
         onView(withId(R.id.main_progress_bar)).check(matches(isDisplayed()))
     }
 
     @Test
-    fun testAErrorLoadingListTextVisible() {
+    fun testErrorLoadingListTextVisible() {
         errorLoadingListLiveData.postValue(true)
         launchFragment()
+
         onView(withId(R.id.main_fetch_error)).check(matches(isDisplayed()))
     }
 
@@ -66,37 +65,9 @@ class MovieListFragmentTest {
     fun testListItemsVisible() {
         movieItemsLiveData.postValue(fakeList)
         launchFragment()
+
         onView(withId(R.id.main_recycler_view)).check(matches(isDisplayed()))
-
-//        onView(withId(R.id.main_recycler_view))
-//            .check(matches(atPosition(0, hasDescendant(withText("Test Text")))));
-//        onView(withId(R.id.title)).check(matches(withText("Hello World from Mock")))
-
-        //onData(allOf(`is`(instanceOf(MovieItem::class.java)), `is`("First Item")))
-        //onView(withId(R.id.main_recycler_view)).check(matches(hasDescendant(withText("First Item"))))
         onView(withText("First Item")).check(matches(isDisplayed()))
-    }
-
-
-    @Test
-    fun testListItemClick() {
-        movieItemsLiveData.postValue(fakeList)
-        launchFragment()
-
-        val recyclerView = onView(withId(R.id.main_recycler_view))
-        recyclerView.perform(
-            RecyclerViewActions.scrollToPosition<MovieListAdapter.ItemViewHolder>(1)
-        )
-        recyclerView.perform(
-            RecyclerViewActions
-                .actionOnItemAtPosition<MovieListAdapter.ItemViewHolder>(
-                    1,
-                    click()
-                )
-        )
-
-        // verify(viewModel, times(1)).plantItemClicked()
-
     }
 
     private val fakeList = listOf(
@@ -107,7 +78,9 @@ class MovieListFragmentTest {
 
     private fun launchFragment() {
         launchFragmentInContainer<MovieListFragment>(
-            factory = MainFragmentFactory(mainViewModelFactory)
+            factory = MainFragmentFactory(
+                mainViewModelFactory
+            )
         )
     }
 

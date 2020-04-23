@@ -159,15 +159,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/status" />
 
-            <TextView
-                android:id="@+id/production_companies_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Production Companies: "
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/homepage" />
-
             <LinearLayout
                 android:id="@+id/production_companies_container"
                 android:layout_width="0dp"
@@ -175,17 +166,8 @@
                 android:layout_marginTop="8dp"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/production_companies_label"
-                app:layout_constraintTop_toBottomOf="@id/homepage" />
-
-            <TextView
-                android:id="@+id/production_countries_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Production Countries: "
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/production_companies_container" />
+                app:layout_constraintTop_toBottomOf="@id/homepage" />
 
             <LinearLayout
                 android:id="@+id/production_countries_container"
@@ -194,17 +176,8 @@
                 android:layout_marginTop="8dp"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/production_countries_label"
-                app:layout_constraintTop_toBottomOf="@id/production_companies_container" />
-
-            <TextView
-                android:id="@+id/spoken_languages_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Spoken Languages: "
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/production_countries_container" />
+                app:layout_constraintTop_toBottomOf="@id/production_companies_container" />
 
             <LinearLayout
                 android:id="@+id/spoken_languages_container"
@@ -213,17 +186,8 @@
                 android:layout_marginTop="8dp"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/spoken_languages_label"
-                app:layout_constraintTop_toBottomOf="@id/production_countries_container" />
-
-            <TextView
-                android:id="@+id/genres_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Genres: "
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/spoken_languages_container" />
+                app:layout_constraintTop_toBottomOf="@id/production_countries_container" />
 
             <LinearLayout
                 android:id="@+id/genres_container"
@@ -232,7 +196,7 @@
                 android:layout_marginTop="8dp"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/genres_label"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/spoken_languages_container" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

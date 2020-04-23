@@ -2,17 +2,11 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-allopen'
 
 //to connect TMDB API
 def apikeyPropertiesFile = rootProject.file("apikey.properties")
 def apikeyProperties = new Properties()
 apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
-
-allOpen {
-    // allows mocking for classes w/o directly opening them for release builds
-    annotation 'com.xxxxx.sampleapplicationtmdb.OpenClass'
-}
 
 android {
     compileSdkVersion 29
@@ -82,8 +76,6 @@ dependencies {
     testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0'
     testImplementation 'org.mockito:mockito-inline:2.25.0'
     testImplementation 'androidx.arch.core:core-testing:2.1.0'
-
-
 
     androidTestImplementation 'androidx.test:core:1.2.0'
     androidTestImplementation 'androidx.test:runner:1.2.0'

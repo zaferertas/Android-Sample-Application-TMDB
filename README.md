@@ -1,22 +1,17 @@
-Sample app to showcase MVVM architecture
-========================================
+Demo app to show sample data in master-details views
+====================================================
 
-The app lists sample data (TMDB movies) fetched from the TMDB repository, showing them in master/detail views.
+The app lists popular movies fetched from the TMDB repository, showing them in master/detail views in MVVM arquitecture.
 
+## Libraries used
+- Android Jetpack (View Binding, ViewModel, LiveData)
 
-Android Jetpack
----------------
-* Data Binding
-* ViewModel
-* LiveData
+- Retrofit
+- Gson
+- RXJava3
+- Glide
+- Dagger 2
 
-Third Party
------------
-* RXJava3
-* Retrofit
-* Gson
-* Glide
-* Dagger
-
+- Espresso, Mockito, mockk
 
 
