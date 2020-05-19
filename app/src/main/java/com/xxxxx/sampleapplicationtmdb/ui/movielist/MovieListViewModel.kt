@@ -30,8 +30,8 @@ class MovieListViewModel(
         loadPopularMovies()
     }
 
-    fun loadPopularMovies() {
-        println("zfrD loadPopularMovies called")
+    private fun loadPopularMovies() {
+
         _isLoading.value = true
 
         compositeDisposable.add(
