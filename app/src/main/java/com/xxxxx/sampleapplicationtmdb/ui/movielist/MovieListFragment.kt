@@ -44,6 +44,13 @@ class MovieListFragment @Inject constructor(private val mainViewModelFactory: Ma
 
         viewModel =
             ViewModelProvider(this, mainViewModelFactory).get(MovieListViewModel::class.java)
+
+        setUpObservers()
+
+        return binding.root
+    }
+
+    private fun setUpObservers() {
         viewModel.movieItems.observe(viewLifecycleOwner, Observer { items ->
             adapter.setItems(items)
         })
@@ -55,8 +62,6 @@ class MovieListFragment @Inject constructor(private val mainViewModelFactory: Ma
         viewModel.errorLoadingList.observe(viewLifecycleOwner, Observer { isError ->
             binding.mainFetchError.visibility = if (isError) VISIBLE else GONE
         })
-
-        return binding.root
     }
 
     private fun showDetailsFragment(movieId: Int) {
@@ -68,6 +73,5 @@ class MovieListFragment @Inject constructor(private val mainViewModelFactory: Ma
             .addToBackStack(null)
             .commit()
     }
-
 
 }
