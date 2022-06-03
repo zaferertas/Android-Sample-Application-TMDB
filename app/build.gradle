@@ -49,8 +49,9 @@ dependencies {
 
     final GLIDE_VERSION = '4.11.0'
     final RETROFIT_VERSION = '2.7.1'
-    final RX_JAVA_VERSION = '3.0.0'
+
     final DAGGER_VERSION = '2.31.2'
+    final RX_JAVA_VERSION = '3.0.0'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
